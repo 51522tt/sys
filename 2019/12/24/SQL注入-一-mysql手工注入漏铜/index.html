@@ -46,29 +46,42 @@
   };
 </script>
 
-  <meta name="description" content="自学真TM难~    T.T">
-<meta property="og:type" content="website">
-<meta property="og:title" content="菜逼的学习笔记~">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="一、Mysql介绍 MySQL 是最流行的关系型数据库管理系统，已被Oracle 收购，推荐使用Maria DB,MariaDB是一个采用Maria存储引擎的MySQL分支版本.  本章用到的函数以及关键字：  database()      &#x2F;&#x2F;查看当前数据库名称 union关键字     &#x2F;&#x2F;联合查询 order by   &#x2F;&#x2F;排序 group_concat() &#x2F;&#x2F;合并结果集 limi &#x2F;&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL注入(一)-mysql手工注入漏铜">
+<meta property="og:url" content="http://yoursite.com/2019/12/24/SQL%E6%B3%A8%E5%85%A5-%E4%B8%80-mysql%E6%89%8B%E5%B7%A5%E6%B3%A8%E5%85%A5%E6%BC%8F%E9%93%9C/index.html">
 <meta property="og:site_name" content="菜逼的学习笔记~">
-<meta property="og:description" content="自学真TM难~    T.T">
+<meta property="og:description" content="一、Mysql介绍 MySQL 是最流行的关系型数据库管理系统，已被Oracle 收购，推荐使用Maria DB,MariaDB是一个采用Maria存储引擎的MySQL分支版本.  本章用到的函数以及关键字：  database()      &#x2F;&#x2F;查看当前数据库名称 union关键字     &#x2F;&#x2F;联合查询 order by   &#x2F;&#x2F;排序 group_concat() &#x2F;&#x2F;合并结果集 limi &#x2F;&#x2F;">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2019/12/24/img/SQL%E6%B3%A8%E5%85%A5(%E4%B8%80)-%E6%89%8B%E5%B7%A5%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9Emysql.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/24/img/SQL%E6%B3%A8%E5%85%A5(%E4%B8%80)-%E5%88%A4%E6%96%AD%E6%B3%A8%E5%85%A5%E7%B1%BB%E5%9E%8B.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/24/img/SQL%E6%B3%A8%E5%85%A5(%E4%B8%80)-%E7%8C%9C%E8%A7%A3%E5%AD%97%E6%AE%B5%E6%95%B0.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/24/img/SQL%E6%B3%A8%E5%85%A5(%E4%B8%80)-union%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A21.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/24/img/SQL%E6%B3%A8%E5%85%A5(%E4%B8%80)-%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE%E5%BA%93%E5%90%8D%E7%A7%B0.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/24/img/SQL%E6%B3%A8%E5%85%A5(%E4%B8%80)-%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8%E5%90%8D.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/24/img/SQL%E6%B3%A8%E5%85%A5(%E4%B8%80)-%E8%8E%B7%E5%8F%96%E8%A1%A8%E5%85%83%E6%95%B0%E6%8D%AE.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/24/img/SQL%E6%B3%A8%E5%85%A5(%E4%B8%80)-%E8%8E%B7%E5%8F%96%E8%B4%A6%E5%8F%B7%E5%92%8C%E5%AF%86%E7%A0%81.png">
+<meta property="article:published_time" content="2019-12-24T14:08:48.000Z">
+<meta property="article:modified_time" content="2019-12-24T14:34:53.025Z">
 <meta property="article:author" content="Fym">
+<meta property="article:tag" content="SQL注入">
+<meta property="article:tag" content="渗透">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2019/12/24/img/SQL%E6%B3%A8%E5%85%A5(%E4%B8%80)-%E6%89%8B%E5%B7%A5%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9Emysql.png">
 
-<link rel="canonical" href="http://yoursite.com/">
+<link rel="canonical" href="http://yoursite.com/2019/12/24/SQL%E6%B3%A8%E5%85%A5-%E4%B8%80-mysql%E6%89%8B%E5%B7%A5%E6%B3%A8%E5%85%A5%E6%BC%8F%E9%93%9C/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: true,
-    isPost: false
+    isHome: false,
+    isPost: true
   };
 </script>
 
-  <title>菜逼的学习笔记~</title>
+  <title>SQL注入(一)-mysql手工注入漏铜 | 菜逼的学习笔记~</title>
   
 
 
@@ -163,10 +176,10 @@
             
 
   <div class="posts-expand">
-        
+      
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/24/SQL%E6%B3%A8%E5%85%A5-%E4%B8%80-mysql%E6%89%8B%E5%B7%A5%E6%B3%A8%E5%85%A5%E6%BC%8F%E9%93%9C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -180,8 +193,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/24/SQL%E6%B3%A8%E5%85%A5-%E4%B8%80-mysql%E6%89%8B%E5%B7%A5%E6%B3%A8%E5%85%A5%E6%BC%8F%E9%93%9C/" class="post-title-link" itemprop="url">SQL注入(一)-mysql手工注入漏铜</a>
+          SQL注入(一)-mysql手工注入漏铜
         </h1>
 
         <div class="post-meta">
@@ -206,7 +218,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="一、Mysql介绍"><a href="#一、Mysql介绍" class="headerlink" title="一、Mysql介绍"></a>一、Mysql介绍</h2><blockquote>
+        <h2 id="一、Mysql介绍"><a href="#一、Mysql介绍" class="headerlink" title="一、Mysql介绍"></a>一、Mysql介绍</h2><blockquote>
 <p>MySQL 是最流行的关系型数据库管理系统，已被Oracle 收购，推荐使用Maria DB,MariaDB是一个采用Maria存储引擎的MySQL分支版本.</p>
 </blockquote>
 <p>本章用到的函数以及关键字：</p>
@@ -308,89 +320,37 @@
 
 <h2 id="最后总结"><a href="#最后总结" class="headerlink" title="最后总结"></a>最后总结</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">没啥好总结的， 就是普通SQL查询语句的应用，会SQL就可以了</span><br><span class="line">古德拜~</span><br></pre></td></tr></table></figure>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+          <div class="post-tags">
+              <a href="/tags/SQL%E6%B3%A8%E5%85%A5/" rel="tag"># SQL注入</a>
+              <a href="/tags/%E6%B8%97%E9%80%8F/" rel="tag"># 渗透</a>
+          </div>
 
         
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/20/%E8%AE%B0%E5%BD%95%E5%AD%A6%E4%B9%A0%E5%92%8C%E7%94%9F%E6%B4%BB/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Fym">
-      <meta itemprop="description" content="自学真TM难~    T.T">
-    </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="菜逼的学习笔记~">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/20/%E8%AE%B0%E5%BD%95%E5%AD%A6%E4%B9%A0%E5%92%8C%E7%94%9F%E6%B4%BB/" class="post-title-link" itemprop="url">记录学习笔记和生活</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-12-20 22:01:28" itemprop="dateCreated datePublished" datetime="2019-12-20T22:01:28+08:00">2019-12-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-23 23:03:32" itemprop="dateModified" datetime="2019-12-23T23:03:32+08:00">2019-12-23</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>虽然快到而立之年，但是我想学习这个事情永远不算晚，仅以此博客记录学习生活和笔记，也是督促自己能坚持多久</p>
-
-      
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/20/%E8%AE%B0%E5%BD%95%E5%AD%A6%E4%B9%A0%E5%92%8C%E7%94%9F%E6%B4%BB/" rel="prev" title="记录学习笔记和生活">
+      <i class="fa fa-chevron-left"></i> 记录学习笔记和生活
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
   
 
   </div>
-
-  
-
 
 
           </div>
@@ -441,6 +401,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、Mysql介绍"><span class="nav-number">1.</span> <span class="nav-text">一、Mysql介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、漏洞原理"><span class="nav-number">2.</span> <span class="nav-text">二、漏洞原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#举例"><span class="nav-number">2.1.</span> <span class="nav-text">举例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、靶场实战"><span class="nav-number">3.</span> <span class="nav-text">三、靶场实战</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-开启靶场"><span class="nav-number">3.1.</span> <span class="nav-text">1. 开启靶场</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-寻找注入点"><span class="nav-number">3.2.</span> <span class="nav-text">2. 寻找注入点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-判断注入类型"><span class="nav-number">3.3.</span> <span class="nav-text">3. 判断注入类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-获取目标后台的SQL语句中的select-查询了多少个字段"><span class="nav-number">3.4.</span> <span class="nav-text">4. 获取目标后台的SQL语句中的select 查询了多少个字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-使用联合查询，查看页面是那个字段在显示数据"><span class="nav-number">3.5.</span> <span class="nav-text">5. 使用联合查询，查看页面是那个字段在显示数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-使用联合查询，查询数据"><span class="nav-number">3.6.</span> <span class="nav-text">6. 使用联合查询，查询数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-MD5解密"><span class="nav-number">3.7.</span> <span class="nav-text">7. MD5解密</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-登录系统，获取Key"><span class="nav-number">3.8.</span> <span class="nav-text">8. 登录系统，获取Key</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后总结"><span class="nav-number">4.</span> <span class="nav-text">最后总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
